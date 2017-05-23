@@ -105,6 +105,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Environment\DefaultMapleHost.cs" />
+    <Compile Include="Environment\IMapleHost.cs" />
+    <Compile Include="Environment\MapleStarter.cs" />
+    <Compile Include="Owin\IOwinMiddlewareProvider.cs" />
+    <Compile Include="Owin\MapleMiddleware.cs" />
+    <Compile Include="Owin\OwinMiddlewareRegistration.cs" />
+    <Compile Include="Owin\Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WarmupStarter\Starter.cs" />
     <Compile Include="WarmupStarter\WarmupHttpModule.cs" />
@@ -113,6 +120,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Maple\Maple.csproj">
+      <Project>{A5487DC7-0BEF-4F34-99C6-79BA1E1A0A17}</Project>
+      <Name>Maple</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

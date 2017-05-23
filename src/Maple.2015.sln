@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapleleaf", "Mapleleaf\Mapleleaf.csproj", "{10F52683-3A6F-4544-9C46-3EC0EF6FC0C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapleleaf.Web.Framework", "Mapleleaf.Web.Framework\Mapleleaf.Web.Framework.csproj", "{B8E1F504-0D0F-41F1-9138-36F51FC63072}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapleleaf.Web", "Mapleleaf.Web\Mapleleaf.Web.csproj", "{81788607-B043-49D9-A8B2-3CABAA93AED4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E33E7DE5-4033-4B46-9D54-6A5A2ECFED5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapleleaf.Tests", "Mapleleaf.Tests\Mapleleaf.Tests.csproj", "{F3055372-0861-4CFE-91C0-92D82BA2B6E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapleleaf.Web.Orchard", "Mapleleaf.Web.Orchard\Mapleleaf.Web.Orchard.csproj", "{9D5744FC-E6A4-4686-A75D-B16D258E60BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Back", "Back", "{97E5CED8-0589-414A-BE7D-5D04E30C4162}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple", "Maple\Maple.csproj", "{CE31E21A-DC00-4C6A-A937-31B346C7D149}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple.Web", "Maple.Web\Maple.Web.csproj", "{C956997E-DD55-48A6-ABAE-0CD5BC10B675}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple.Web.App", "Maple.Web.App\Maple.Web.App.csproj", "{06B2F32F-B0EC-4758-93C1-C49E9347AE9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{4D9278CB-49B9-4A45-95AB-6F008605C185}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Themes", "Themes", "{E921488A-FA5D-4C5F-92CC-6D38F8D3A78D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple.Web.Core", "Maple.Web.App\Core\Maple.Web.Core.csproj", "{BA4E59C6-437E-4C6C-99D3-2B938D473A79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10F52683-3A6F-4544-9C46-3EC0EF6FC0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10F52683-3A6F-4544-9C46-3EC0EF6FC0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10F52683-3A6F-4544-9C46-3EC0EF6FC0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10F52683-3A6F-4544-9C46-3EC0EF6FC0C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E1F504-0D0F-41F1-9138-36F51FC63072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E1F504-0D0F-41F1-9138-36F51FC63072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E1F504-0D0F-41F1-9138-36F51FC63072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E1F504-0D0F-41F1-9138-36F51FC63072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81788607-B043-49D9-A8B2-3CABAA93AED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81788607-B043-49D9-A8B2-3CABAA93AED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81788607-B043-49D9-A8B2-3CABAA93AED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81788607-B043-49D9-A8B2-3CABAA93AED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3055372-0861-4CFE-91C0-92D82BA2B6E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3055372-0861-4CFE-91C0-92D82BA2B6E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3055372-0861-4CFE-91C0-92D82BA2B6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3055372-0861-4CFE-91C0-92D82BA2B6E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D5744FC-E6A4-4686-A75D-B16D258E60BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D5744FC-E6A4-4686-A75D-B16D258E60BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D5744FC-E6A4-4686-A75D-B16D258E60BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D5744FC-E6A4-4686-A75D-B16D258E60BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE31E21A-DC00-4C6A-A937-31B346C7D149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE31E21A-DC00-4C6A-A937-31B346C7D149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE31E21A-DC00-4C6A-A937-31B346C7D149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE31E21A-DC00-4C6A-A937-31B346C7D149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C956997E-DD55-48A6-ABAE-0CD5BC10B675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C956997E-DD55-48A6-ABAE-0CD5BC10B675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C956997E-DD55-48A6-ABAE-0CD5BC10B675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C956997E-DD55-48A6-ABAE-0CD5BC10B675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B2F32F-B0EC-4758-93C1-C49E9347AE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B2F32F-B0EC-4758-93C1-C49E9347AE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B2F32F-B0EC-4758-93C1-C49E9347AE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B2F32F-B0EC-4758-93C1-C49E9347AE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4E59C6-437E-4C6C-99D3-2B938D473A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4E59C6-437E-4C6C-99D3-2B938D473A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4E59C6-437E-4C6C-99D3-2B938D473A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4E59C6-437E-4C6C-99D3-2B938D473A79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{10F52683-3A6F-4544-9C46-3EC0EF6FC0C1} = {97E5CED8-0589-414A-BE7D-5D04E30C4162}
+		{B8E1F504-0D0F-41F1-9138-36F51FC63072} = {97E5CED8-0589-414A-BE7D-5D04E30C4162}
+		{81788607-B043-49D9-A8B2-3CABAA93AED4} = {97E5CED8-0589-414A-BE7D-5D04E30C4162}
+		{F3055372-0861-4CFE-91C0-92D82BA2B6E5} = {E33E7DE5-4033-4B46-9D54-6A5A2ECFED5A}
+		{9D5744FC-E6A4-4686-A75D-B16D258E60BA} = {97E5CED8-0589-414A-BE7D-5D04E30C4162}
+	EndGlobalSection
+EndGlobal

@@ -107,6 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentManagement\XmlHelper.cs" />
+    <Compile Include="DependentSetting\CacheModule.cs" />
+    <Compile Include="DependentSetting\LocalizationModule.cs" />
+    <Compile Include="DependentSetting\LoggingModule.cs" />
     <Compile Include="Environment\Configuration\AppConfigurationAccessor.cs" />
     <Compile Include="Environment\Configuration\ExtensionLocations.cs" />
     <Compile Include="Environment\Configuration\IAppConfigurationAccessor.cs" />
@@ -168,7 +171,7 @@
     <Compile Include="Events\DefaultOrchardEventBus.cs" />
     <Compile Include="Events\DelegateHelper.cs" />
     <Compile Include="Events\EventsInterceptor.cs" />
-    <Compile Include="Events\EventsModule.cs" />
+    <Compile Include="DependentSetting\EventsModule.cs" />
     <Compile Include="Events\EventsRegistrationSource.cs" />
     <Compile Include="Events\IEventBus.cs" />
     <Compile Include="Events\IEventHandler.cs" />
@@ -236,6 +239,7 @@
       <Name>Maple</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

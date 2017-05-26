@@ -190,7 +190,7 @@ namespace Maple.Web.Environment.Extensions {
                 }
                 sb.Append(T("This issue can be usually solved by removing or renaming the conflicting extension."));
                 Logger.Error(sb.ToString());
-                throw new OrchardException(new LocalizedString(sb.ToString()));
+                throw new MapleWebCoreException(new LocalizedString(sb.ToString()));
             }
 
             var previousDependencies = _dependenciesFolder.LoadDescriptors().ToList();

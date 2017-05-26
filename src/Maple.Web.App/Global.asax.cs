@@ -86,7 +86,6 @@ namespace Maple.Web.App
 
             host.Initialize();
 
-            // initialize shells to speed up the first dynamic query
             host.BeginRequest();
             host.EndRequest();
 

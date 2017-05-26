@@ -106,18 +106,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentManagement\XmlHelper.cs" />
     <Compile Include="Environment\Configuration\AppConfigurationAccessor.cs" />
     <Compile Include="Environment\Configuration\ExtensionLocations.cs" />
     <Compile Include="Environment\Configuration\IAppConfigurationAccessor.cs" />
     <Compile Include="Environment\Configuration\ShellSettings.cs" />
     <Compile Include="Environment\Configuration\TenantState.cs" />
     <Compile Include="Environment\DefaultMapleHost.cs" />
+    <Compile Include="Environment\Extensions\DefaultCriticalErrorProvider.cs" />
     <Compile Include="Environment\Extensions\Folders\CoreModuleFolders.cs" />
     <Compile Include="Environment\Extensions\Folders\ExtensionHarvester.cs" />
     <Compile Include="Environment\Extensions\Folders\IExtensionFolders.cs" />
     <Compile Include="Environment\Extensions\Folders\IExtensionHarvester.cs" />
     <Compile Include="Environment\Extensions\Folders\ModuleFolders.cs" />
     <Compile Include="Environment\Extensions\Folders\ThemeFolders.cs" />
+    <Compile Include="Environment\Extensions\ICriticalErrorProvider.cs" />
     <Compile Include="Environment\Extensions\Models\DefaultExtensionTypes.cs" />
     <Compile Include="Environment\Extensions\Models\ExtensionDescriptor.cs" />
     <Compile Include="Environment\Extensions\Models\Feature.cs" />

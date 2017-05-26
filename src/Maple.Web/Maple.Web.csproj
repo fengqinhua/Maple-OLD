@@ -127,8 +127,10 @@
     <Compile Include="Environment\Extensions\Compilers\ProjectFileDescriptor.cs" />
     <Compile Include="Environment\Extensions\DefaultCriticalErrorProvider.cs" />
     <Compile Include="Environment\Extensions\ExtensionEntry.cs" />
+    <Compile Include="Environment\Extensions\ExtensionLoaderCoordinator.cs" />
     <Compile Include="Environment\Extensions\ExtensionLoadingContext.cs" />
     <Compile Include="Environment\Extensions\ExtensionManager.cs" />
+    <Compile Include="Environment\Extensions\ExtensionMonitoringCoordinator.cs" />
     <Compile Include="Environment\Extensions\Folders\CoreModuleFolders.cs" />
     <Compile Include="Environment\Extensions\Folders\ExtensionHarvester.cs" />
     <Compile Include="Environment\Extensions\Folders\IExtensionFolders.cs" />
@@ -136,7 +138,9 @@
     <Compile Include="Environment\Extensions\Folders\ModuleFolders.cs" />
     <Compile Include="Environment\Extensions\Folders\ThemeFolders.cs" />
     <Compile Include="Environment\Extensions\ICriticalErrorProvider.cs" />
+    <Compile Include="Environment\Extensions\IExtensionLoaderCoordinator.cs" />
     <Compile Include="Environment\Extensions\IExtensionManager.cs" />
+    <Compile Include="Environment\Extensions\IExtensionMonitoringCoordinator.cs" />
     <Compile Include="Environment\Extensions\Loaders\CoreExtensionLoader.cs" />
     <Compile Include="Environment\Extensions\Loaders\DynamicExtensionLoader.cs" />
     <Compile Include="Environment\Extensions\Loaders\ExtensionLoaderBase.cs" />

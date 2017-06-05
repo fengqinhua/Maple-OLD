@@ -121,7 +121,11 @@
     <Compile Include="Environment\Configuration\AppConfigurationAccessor.cs" />
     <Compile Include="Environment\Configuration\ExtensionLocations.cs" />
     <Compile Include="Environment\Configuration\IAppConfigurationAccessor.cs" />
+    <Compile Include="Environment\Configuration\IShellSettingsManager.cs" />
+    <Compile Include="Environment\Configuration\IShellSettingsManagerEventHandler.cs" />
     <Compile Include="Environment\Configuration\ShellSettings.cs" />
+    <Compile Include="Environment\Configuration\ShellSettingsManager.cs" />
+    <Compile Include="Environment\Configuration\ShellSettingsSerializer.cs" />
     <Compile Include="Environment\Configuration\TenantState.cs" />
     <Compile Include="Environment\DefaultHostContainer.cs" />
     <Compile Include="Environment\DefaultHostEnvironment.cs" />
@@ -169,12 +173,14 @@
     <Compile Include="Environment\Extensions\MapleSuppressDependencyAttribute.cs" />
     <Compile Include="Environment\Features\FeatureManager.cs" />
     <Compile Include="Environment\Features\IFeatureManager.cs" />
+    <Compile Include="Environment\HostEnvironment.cs" />
     <Compile Include="Environment\IAssemblyBuilder.cs" />
     <Compile Include="Environment\IAssemblyLoader.cs" />
     <Compile Include="Environment\IAssemblyNameResolver.cs" />
     <Compile Include="Environment\IBuildManager.cs" />
     <Compile Include="Environment\IFeatureEventHandler.cs" />
     <Compile Include="Environment\IHostEnvironment.cs" />
+    <Compile Include="Environment\IHostLocalRestart.cs" />
     <Compile Include="Environment\IMapleHost.cs" />
     <Compile Include="Environment\IMapleHostContainer.cs" />
     <Compile Include="Environment\IOrchardShell.cs" />

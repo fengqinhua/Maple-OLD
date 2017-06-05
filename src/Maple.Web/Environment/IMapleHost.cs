@@ -1,4 +1,7 @@
 
+using Maple.Web.Environment.Configuration;
+using Maple.Web.Environment.ShellBuilders;
+
 namespace Maple.Web.Environment {
     /// <summary>
     /// 网络应用程序宿主
@@ -22,10 +25,10 @@ namespace Maple.Web.Environment {
         /// </summary>
         void EndRequest();
 
-        //ShellContext GetShellContext(ShellSettings shellSettings);
-        ///// <summary>
-        ///// 用于构建shell配置代码的临时独立实例
-        ///// </summary>
-        //IWorkContextScope CreateStandaloneEnvironment(ShellSettings shellSettings);
+        ShellContext GetShellContext(ShellSettings shellSettings);
+        /// <summary>
+        /// 用于构建shell配置代码的临时独立实例
+        /// </summary>
+        IWorkContextScope CreateStandaloneEnvironment(ShellSettings shellSettings);
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="Caching\Signals.cs" />
     <Compile Include="Caching\Weak.cs" />
     <Compile Include="DataConst.cs" />
+    <Compile Include="Data\ITransactionManager.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="GlobalConfigurationExtensions.cs" />
     <Compile Include="IDependency.cs" />

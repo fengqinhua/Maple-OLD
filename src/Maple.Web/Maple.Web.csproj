@@ -243,6 +243,7 @@
     <Compile Include="FileSystems\VirtualPath\IVirtualPathProvider.cs" />
     <Compile Include="FileSystems\WebSite\IWebSiteFolder.cs" />
     <Compile Include="FileSystems\WebSite\WebSiteFolder.cs" />
+    <Compile Include="FlatPositionComparer.cs" />
     <Compile Include="InvokeExtensions.cs" />
     <Compile Include="IWorkContextAccessor.cs" />
     <Compile Include="MapleWebCoreException.cs" />
@@ -336,6 +337,9 @@
     <Compile Include="Settings\ISite.cs" />
     <Compile Include="Settings\ISiteService.cs" />
     <Compile Include="Settings\ResourceDebugMode.cs" />
+    <Compile Include="Tasks\BackgroundService.cs" />
+    <Compile Include="Tasks\IBackgroundTask.cs" />
+    <Compile Include="Tasks\SweepGenerator.cs" />
     <Compile Include="UI\Resources\IResourceManager.cs" />
     <Compile Include="UI\Resources\IResourceManifest.cs" />
     <Compile Include="UI\Resources\IResourceManifestProvider.cs" />
@@ -367,6 +371,18 @@
     <Compile Include="WarmupStarter\Starter.cs" />
     <Compile Include="WarmupStarter\WarmupHttpModule.cs" />
     <Compile Include="WarmupStarter\WarmupUtility.cs" />
+    <Compile Include="WebApi\AutofacWebApiDependencyResolver.cs" />
+    <Compile Include="WebApi\AutofacWebApiDependencyScope.cs" />
+    <Compile Include="WebApi\DefaultOrchardWebApiHttpControllerSelector.cs" />
+    <Compile Include="WebApi\DefaultOrchardWebApiHttpHttpControllerActivator.cs" />
+    <Compile Include="WebApi\Extensions\RouteExtension.cs" />
+    <Compile Include="WebApi\Filters\IFilterProvider.cs" />
+    <Compile Include="WebApi\Filters\OrchardApiActionFilterDispatcher.cs" />
+    <Compile Include="WebApi\Filters\OrchardApiAuthorizationFilterDispatcher.cs" />
+    <Compile Include="WebApi\Filters\OrchardApiExceptionFilterDispatcher.cs" />
+    <Compile Include="WebApi\Filters\UnhandledApiExceptionFilter.cs" />
+    <Compile Include="WebApi\Routes\IHttpRouteProvider.cs" />
+    <Compile Include="WebApi\Routes\StandardExtensionHttpRouteProvider.cs" />
     <Compile Include="WorkContext.cs" />
     <Compile Include="WorkContextExtensions.cs" />
   </ItemGroup>

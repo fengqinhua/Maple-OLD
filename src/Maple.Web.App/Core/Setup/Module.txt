@@ -1,0 +1,14 @@
+﻿Name: Setup
+AntiForgery: enabled
+Author: The Maple Team
+Website: 
+Version: 1.0
+OrchardVersion: 1.0
+Description: 系统初始化设置
+FeatureDescription: 系统初始化设置
+Category: Core
+Features:
+	Maple.Core.Setup:
+		Name: Setup
+		Description: 系统初始化设置
+		Category: Core

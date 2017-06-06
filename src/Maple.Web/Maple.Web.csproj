@@ -204,6 +204,7 @@
     <Compile Include="Environment\State\IShellStateManagerEventHandler.cs" />
     <Compile Include="Environment\State\Models\ShellState.cs" />
     <Compile Include="Environment\State\ShellStateCoordinator.cs" />
+    <Compile Include="Environment\ViewsBackgroundCompilation.cs" />
     <Compile Include="Environment\Warmup\WarmupUtility.cs" />
     <Compile Include="Environment\WorkContextAccessor.cs" />
     <Compile Include="Environment\WorkContextImplementation.cs" />
@@ -215,6 +216,9 @@
     <Compile Include="Events\EventsRegistrationSource.cs" />
     <Compile Include="Events\IEventBus.cs" />
     <Compile Include="Events\IEventHandler.cs" />
+    <Compile Include="Exceptions\DefaultExceptionPolicy.cs" />
+    <Compile Include="Exceptions\Filters\UnhandledExceptionFilter.cs" />
+    <Compile Include="Exceptions\IExceptionPolicy.cs" />
     <Compile Include="FileSystems\AppData\AppDataFolder.cs" />
     <Compile Include="FileSystems\AppData\IAppDataFolder.cs" />
     <Compile Include="FileSystems\AppData\IAppDataFolderRoot.cs" />

@@ -1,0 +1,14 @@
+﻿Name: SuperAdmin
+AntiForgery: enabled
+Author: The Maple Team
+Website: 
+Version: 1.0
+OrchardVersion: 1.0
+Description: 维护系统超级管理员信息
+FeatureDescription: 维护系统超级管理员信息
+Category: Core
+Features:
+	Maple.Core.SuperAdmin:
+		Name: SuperAdmin
+		Description: 维护系统超级管理员信息
+		Category: Core

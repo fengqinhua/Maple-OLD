@@ -1,0 +1,14 @@
+﻿Name: DataSources
+AntiForgery: enabled
+Author: The Maple Team
+Website: 
+Version: 1.0
+OrchardVersion: 1.0
+Description: 维护系统数据源
+FeatureDescription: 维护系统数据源
+Category: Core
+Features:
+	Maple.Core.DataSources:
+		Name: DataSources
+		Description: 维护系统数据源
+		Category: Core

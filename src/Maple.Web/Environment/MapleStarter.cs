@@ -23,6 +23,13 @@ using Maple.Web.FileSystems.Dependencies;
 using Maple.Web.FileSystems.VirtualPath;
 using Maple.Web.Environment.Extensions.Compilers;
 using Maple.Web.Environment.Extensions;
+using Maple.Web.Exceptions;
+using Maple.Web.Mvc;
+using Maple.Web.Events;
+using Maple.Web.Mvc.ViewEngines.Razor;
+using Maple.Web.Environment.Descriptor;
+using Maple.Web.Environment.ShellBuilders;
+using Maple.Web.Environment.State;
 
 namespace Maple.Web.Environment {
     public static class MapleStarter
@@ -47,21 +54,21 @@ namespace Maple.Web.Environment {
             builder.RegisterType<DefaultParallelCacheContext>().As<IParallelCacheContext>().SingleInstance();
             builder.RegisterType<DefaultAsyncTokenProvider>().As<IAsyncTokenProvider>().SingleInstance();
 
-            //builder.RegisterType<DefaultHostEnvironment>().As<IHostEnvironment>().SingleInstance();
-            //builder.RegisterType<DefaultHostLocalRestart>().As<IHostLocalRestart>().Named<IEventHandler>(typeof(IShellSettingsManagerEventHandler).Name).SingleInstance();
+            builder.RegisterType<DefaultHostEnvironment>().As<IHostEnvironment>().SingleInstance();
+            builder.RegisterType<DefaultHostLocalRestart>().As<IHostLocalRestart>().Named<IEventHandler>(typeof(IShellSettingsManagerEventHandler).Name).SingleInstance();
             builder.RegisterType<DefaultBuildManager>().As<IBuildManager>().SingleInstance();
             builder.RegisterType<DynamicModuleVirtualPathProvider>().As<ICustomVirtualPathProvider>().SingleInstance();
             builder.RegisterType<AppDataFolderRoot>().As<IAppDataFolderRoot>().SingleInstance();
             builder.RegisterType<DefaultExtensionCompiler>().As<IExtensionCompiler>().SingleInstance();
-            //builder.RegisterType<DefaultRazorCompilationEvents>().As<IRazorCompilationEvents>().SingleInstance();
+            builder.RegisterType<DefaultRazorCompilationEvents>().As<IRazorCompilationEvents>().SingleInstance();
             builder.RegisterType<DefaultProjectFileParser>().As<IProjectFileParser>().SingleInstance();
             builder.RegisterType<DefaultAssemblyLoader>().As<IAssemblyLoader>().SingleInstance();
             builder.RegisterType<AppDomainAssemblyNameResolver>().As<IAssemblyNameResolver>().SingleInstance();
             builder.RegisterType<GacAssemblyNameResolver>().As<IAssemblyNameResolver>().SingleInstance();
             builder.RegisterType<OrchardFrameworkAssemblyNameResolver>().As<IAssemblyNameResolver>().SingleInstance();
-            //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().InstancePerDependency();
-            //builder.RegisterType<ViewsBackgroundCompilation>().As<IViewsBackgroundCompilation>().SingleInstance();
-            //builder.RegisterType<DefaultExceptionPolicy>().As<IExceptionPolicy>().SingleInstance();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().InstancePerDependency();
+            builder.RegisterType<ViewsBackgroundCompilation>().As<IViewsBackgroundCompilation>().SingleInstance();
+            builder.RegisterType<DefaultExceptionPolicy>().As<IExceptionPolicy>().SingleInstance();
             builder.RegisterType<DefaultCriticalErrorProvider>().As<ICriticalErrorProvider>().SingleInstance();
             //builder.RegisterType<RazorTemplateCache>().As<IRazorTemplateProvider>().SingleInstance();
 
@@ -75,50 +82,49 @@ namespace Maple.Web.Environment {
             RegisterVolatileProvider<DefaultVirtualPathMonitor, IVirtualPathMonitor>(builder);
             RegisterVolatileProvider<DefaultVirtualPathProvider, IVirtualPathProvider>(builder);
 
-            builder.RegisterType<DefaultMapleHost>().As<IMapleHost>()
+
+            builder.RegisterType<DefaultMapleHost>().As<IMapleHost>().As<IEventHandler>()
+                .Named<IEventHandler>(typeof(IShellSettingsManagerEventHandler).Name)
+                .Named<IEventHandler>(typeof(IShellDescriptorManagerEventHandler).Name)
                 .SingleInstance();
-            //builder.RegisterType<DefaultOrchardHost>().As<IOrchardHost>().As<IEventHandler>()
-            //    .Named<IEventHandler>(typeof(IShellSettingsManagerEventHandler).Name)
-            //    .Named<IEventHandler>(typeof(IShellDescriptorManagerEventHandler).Name)
-            //    .SingleInstance();
-            //{
-            //    builder.RegisterType<ShellSettingsManager>().As<IShellSettingsManager>().SingleInstance();
+            {
+                builder.RegisterType<ShellSettingsManager>().As<IShellSettingsManager>().SingleInstance();
 
-            //    builder.RegisterType<ShellContextFactory>().As<IShellContextFactory>().SingleInstance();
-            //    {
-            //        builder.RegisterType<ShellDescriptorCache>().As<IShellDescriptorCache>().SingleInstance();
+                builder.RegisterType<ShellContextFactory>().As<IShellContextFactory>().SingleInstance();
+                {
+                    builder.RegisterType<ShellDescriptorCache>().As<IShellDescriptorCache>().SingleInstance();
 
-            //        builder.RegisterType<CompositionStrategy>().As<ICompositionStrategy>().SingleInstance();
-            //        {
-                            //builder.RegisterType<ShellContainerRegistrations>().As<IShellContainerRegistrations>().SingleInstance();
-                            builder.RegisterType<ExtensionLoaderCoordinator>().As<IExtensionLoaderCoordinator>().SingleInstance();
-                            builder.RegisterType<ExtensionMonitoringCoordinator>().As<IExtensionMonitoringCoordinator>().SingleInstance();
-                            builder.RegisterType<ExtensionManager>().As<IExtensionManager>().SingleInstance();
-                            {
-                                builder.RegisterType<ExtensionHarvester>().As<IExtensionHarvester>().SingleInstance();
-                                builder.RegisterType<ModuleFolders>().As<IExtensionFolders>().SingleInstance()
-                                    .WithParameter(new NamedParameter("paths", extensionLocations.ModuleLocations));
-                                builder.RegisterType<CoreModuleFolders>().As<IExtensionFolders>().SingleInstance()
-                                    .WithParameter(new NamedParameter("paths", extensionLocations.CoreLocations));
-                                builder.RegisterType<ThemeFolders>().As<IExtensionFolders>().SingleInstance()
-                                    .WithParameter(new NamedParameter("paths", extensionLocations.ThemeLocations));
+                    builder.RegisterType<CompositionStrategy>().As<ICompositionStrategy>().SingleInstance();
+                    {
+                        builder.RegisterType<ShellContainerRegistrations>().As<IShellContainerRegistrations>().SingleInstance();
+                        builder.RegisterType<ExtensionLoaderCoordinator>().As<IExtensionLoaderCoordinator>().SingleInstance();
+                        builder.RegisterType<ExtensionMonitoringCoordinator>().As<IExtensionMonitoringCoordinator>().SingleInstance();
+                        builder.RegisterType<ExtensionManager>().As<IExtensionManager>().SingleInstance();
+                        {
+                            builder.RegisterType<ExtensionHarvester>().As<IExtensionHarvester>().SingleInstance();
+                            builder.RegisterType<ModuleFolders>().As<IExtensionFolders>().SingleInstance()
+                                .WithParameter(new NamedParameter("paths", extensionLocations.ModuleLocations));
+                            builder.RegisterType<CoreModuleFolders>().As<IExtensionFolders>().SingleInstance()
+                                .WithParameter(new NamedParameter("paths", extensionLocations.CoreLocations));
+                            builder.RegisterType<ThemeFolders>().As<IExtensionFolders>().SingleInstance()
+                                .WithParameter(new NamedParameter("paths", extensionLocations.ThemeLocations));
 
-                                builder.RegisterType<CoreExtensionLoader>().As<IExtensionLoader>().SingleInstance();
-                                builder.RegisterType<ReferencedExtensionLoader>().As<IExtensionLoader>().SingleInstance();
-                                builder.RegisterType<PrecompiledExtensionLoader>().As<IExtensionLoader>().SingleInstance();
-                                builder.RegisterType<DynamicExtensionLoader>().As<IExtensionLoader>().SingleInstance();
-                                builder.RegisterType<RawThemeExtensionLoader>().As<IExtensionLoader>().SingleInstance();
-                            }
-            //        }
+                            builder.RegisterType<CoreExtensionLoader>().As<IExtensionLoader>().SingleInstance();
+                            builder.RegisterType<ReferencedExtensionLoader>().As<IExtensionLoader>().SingleInstance();
+                            builder.RegisterType<PrecompiledExtensionLoader>().As<IExtensionLoader>().SingleInstance();
+                            builder.RegisterType<DynamicExtensionLoader>().As<IExtensionLoader>().SingleInstance();
+                            builder.RegisterType<RawThemeExtensionLoader>().As<IExtensionLoader>().SingleInstance();
+                        }
+                    }
 
-            //        builder.RegisterType<ShellContainerFactory>().As<IShellContainerFactory>().SingleInstance();
-            //    }
+                    builder.RegisterType<ShellContainerFactory>().As<IShellContainerFactory>().SingleInstance();
+                }
 
-            //    builder.RegisterType<DefaultProcessingEngine>().As<IProcessingEngine>().SingleInstance();
-            //}
+                builder.RegisterType<DefaultProcessingEngine>().As<IProcessingEngine>().SingleInstance();
+            }
 
-            //builder.RegisterType<RunningShellTable>().As<IRunningShellTable>().SingleInstance();
-            //builder.RegisterType<DefaultOrchardShell>().As<IOrchardShell>().InstancePerMatchingLifetimeScope("shell");
+            builder.RegisterType<RunningShellTable>().As<IRunningShellTable>().SingleInstance();
+            builder.RegisterType<DefaultOrchardShell>().As<IOrchardShell>().InstancePerMatchingLifetimeScope("shell");
             //builder.RegisterType<SessionConfigurationCache>().As<ISessionConfigurationCache>().InstancePerMatchingLifetimeScope("shell");
 
             registrations(builder);

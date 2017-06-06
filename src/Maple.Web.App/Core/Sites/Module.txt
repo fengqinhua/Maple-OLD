@@ -1,4 +1,4 @@
-﻿Name: Sites
+﻿Name: Maple.Core.Sites
 AntiForgery: enabled
 Author: The Maple Team
 Website: 
@@ -6,9 +6,4 @@ Version: 1.0
 OrchardVersion: 1.0
 Description: 维护系统站点信息
 FeatureDescription: 维护系统站点信息
-Category: Core
-Features:
-	Maple.Core.Sites:
-		Name: Sites
-		Description: 维护系统站点信息
-		Category: Core
+Category: Core 

@@ -46,8 +46,8 @@ namespace Maple.Web.Environment {
             builder.RegisterModule(new EventsModule());
             builder.RegisterModule(new CacheModule());
 
-            //// a single default host implementation is needed for bootstrapping a web app domain
-            //builder.RegisterType<DefaultOrchardEventBus>().As<IEventBus>().SingleInstance();
+            // a single default host implementation is needed for bootstrapping a web app domain
+            builder.RegisterType<DefaultOrchardEventBus>().As<IEventBus>().SingleInstance();
 
             builder.RegisterType<DefaultCacheHolder>().As<ICacheHolder>().SingleInstance();
             builder.RegisterType<DefaultCacheContextAccessor>().As<ICacheContextAccessor>().SingleInstance();

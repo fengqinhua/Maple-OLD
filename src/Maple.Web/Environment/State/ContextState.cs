@@ -7,7 +7,7 @@ using Maple.Web.DependentSetting;
 namespace Maple.Web.Environment.State {
 
     /// <summary>
-    /// Holds some state for the current HttpContext or thread
+    /// 存储当前 HttpContext 或 线程 的状态信息
     /// </summary>
     /// <typeparam name="T">The type of data to store</typeparam>
     public class ContextState<T> where T : class {

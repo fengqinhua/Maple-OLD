@@ -15,7 +15,7 @@ using IModelBinderProvider = Maple.Web.Mvc.ModelBinders.IModelBinderProvider;
 
 namespace Maple.Web.Environment
 {
-    public class DefaultOrchardShell : IOrchardShell
+    public class DefaultMapleShell : IMapleShell
     {
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IEnumerable<IRouteProvider> _routeProviders;
@@ -27,7 +27,7 @@ namespace Maple.Web.Environment
         private readonly IEnumerable<IOwinMiddlewareProvider> _owinMiddlewareProviders;
         private readonly ShellSettings _shellSettings;
 
-        public DefaultOrchardShell(
+        public DefaultMapleShell(
             IWorkContextAccessor workContextAccessor,
             IEnumerable<IRouteProvider> routeProviders,
             IEnumerable<IHttpRouteProvider> httpRouteProviders,
@@ -83,7 +83,7 @@ namespace Maple.Web.Environment
 
             using (var scope = _workContextAccessor.CreateWorkContextScope())
             {
-                using (var events = scope.Resolve<Owned<IOrchardShellEvents>>())
+                using (var events = scope.Resolve<Owned<IMapleShellEvents>>())
                 {
                     events.Value.Activated();
                 }
@@ -98,7 +98,7 @@ namespace Maple.Web.Environment
             {
                 using (var scope = _workContextAccessor.CreateWorkContextScope())
                 {
-                    using (var events = scope.Resolve<Owned<IOrchardShellEvents>>())
+                    using (var events = scope.Resolve<Owned<IMapleShellEvents>>())
                     {
                         SafelyTerminate(() => events.Value.Terminating());
                     }

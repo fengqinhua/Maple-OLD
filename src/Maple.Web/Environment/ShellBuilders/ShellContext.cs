@@ -12,7 +12,7 @@ namespace Maple.Web.Environment.ShellBuilders {
         public ShellDescriptor Descriptor { get; set; }
         public ShellBlueprint Blueprint { get; set; }
         public ILifetimeScope LifetimeScope { get; set; }
-        public IOrchardShell Shell { get; set; }
+        public IMapleShell Shell { get; set; }
 
         public void Dispose() {
             Dispose(true);

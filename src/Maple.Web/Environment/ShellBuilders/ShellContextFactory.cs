@@ -17,8 +17,8 @@ namespace Maple.Web.Environment.ShellBuilders {
         ShellContext CreateShellContext(ShellSettings settings);
 
         /// <summary>
-        /// Builds a shell context for an uninitialized Orchard instance. Needed
-        /// to display setup user interface.
+        /// 创建一个缺省的Shell上下文实例. 
+        /// Needed to display setup user interface.
         /// </summary>
         ShellContext CreateSetupContext(ShellSettings settings);
 
@@ -80,7 +80,7 @@ namespace Maple.Web.Environment.ShellBuilders {
                 Descriptor = currentDescriptor,
                 Blueprint = blueprint,
                 LifetimeScope = shellScope,
-                Shell = shellScope.Resolve<IOrchardShell>(),
+                Shell = shellScope.Resolve<IMapleShell>(),
             };
         }
 
@@ -95,15 +95,19 @@ namespace Maple.Web.Environment.ShellBuilders {
             };
         }
 
+        /// <summary>
+        ///  创建一个缺省的Shell上下文实例.  Needed to display setup user interface.
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public ShellContext CreateSetupContext(ShellSettings settings) {
-            Logger.Debug("No shell settings available. Creating shell context for setup");
+            Logger.Debug("未获取Shell设置信息，创建一个缺省得Shell上下文信息");
 
             var descriptor = new ShellDescriptor {
                 SerialNumber = -1,
                 Features = new[] {
-                    new ShellFeature { Name = "Orchard.Setup" },
-                    new ShellFeature { Name = "Shapes" },
-                    new ShellFeature { Name = "Orchard.Resources" }
+                    new ShellFeature { Name = "Maple.Setup" },
+                    new ShellFeature { Name = "Maple.Resources" }
                 },
             };
 
@@ -115,7 +119,7 @@ namespace Maple.Web.Environment.ShellBuilders {
                 Descriptor = descriptor,
                 Blueprint = blueprint,
                 LifetimeScope = shellScope,
-                Shell = shellScope.Resolve<IOrchardShell>(),
+                Shell = shellScope.Resolve<IMapleShell>(),
             };
         }
 
@@ -131,7 +135,7 @@ namespace Maple.Web.Environment.ShellBuilders {
                 Descriptor = shellDescriptor,
                 Blueprint = blueprint,
                 LifetimeScope = shellScope,
-                Shell = shellScope.Resolve<IOrchardShell>(),
+                Shell = shellScope.Resolve<IMapleShell>(),
             };
         }
     }

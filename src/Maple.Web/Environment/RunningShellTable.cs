@@ -7,6 +7,9 @@ using System.Web;
 using Maple.Web.Environment.Configuration;
 
 namespace Maple.Web.Environment {
+    /// <summary>
+    /// 运行中的子站点配置信息存储器
+    /// </summary>
     public interface IRunningShellTable {
         void Add(ShellSettings settings);
         void Remove(ShellSettings settings);
@@ -15,11 +18,23 @@ namespace Maple.Web.Environment {
         ShellSettings Match(string host, string appRelativeCurrentExecutionFilePath);
     }
 
+    /// <summary>
+    /// 运行中的子站点配置信息存储器
+    /// </summary>
     public class RunningShellTable : IRunningShellTable {
         private IEnumerable<ShellSettings> _shells = Enumerable.Empty<ShellSettings>();
+        /// <summary>
+        /// 子站点按照域名分组
+        /// </summary>
         private IDictionary<string, IEnumerable<ShellSettings>> _shellsByHost;
+        /// <summary>
+        /// 已匹配的子站点缓存
+        /// </summary>
         private readonly ConcurrentDictionary<string, ShellSettings> _shellsByHostAndPrefix = new ConcurrentDictionary<string, ShellSettings>(StringComparer.OrdinalIgnoreCase);
 
+        /// <summary>
+        /// 默认/缺省的子站点设置
+        /// </summary>
         private ShellSettings _fallback;
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
@@ -71,13 +86,14 @@ namespace Maple.Web.Environment {
         }
 
         private void Organize() {
+            //子站点域名 或 前缀不为空
             var qualified =
                 _shells.Where(x => !string.IsNullOrEmpty(x.RequestUrlHost) || !string.IsNullOrEmpty(x.RequestUrlPrefix));
-
+            //子站点域名 和 前缀均为空
             var unqualified = _shells
                 .Where(x => string.IsNullOrEmpty(x.RequestUrlHost) && string.IsNullOrEmpty(x.RequestUrlPrefix))
                 .ToList();
-
+            //子站点按照域名分组
             _shellsByHost = qualified
                 .SelectMany(s => s.RequestUrlHost == null || s.RequestUrlHost.IndexOf(',') == -1 ? new[] {s} : 
                     s.RequestUrlHost.Split(new [] {','}, StringSplitOptions.RemoveEmptyEntries)
@@ -104,7 +120,11 @@ namespace Maple.Web.Environment {
 
             _shellsByHostAndPrefix.Clear();
         }
-
+        /// <summary>
+        /// 根据域名+请求的虚拟目录匹配子站点设置信息
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         public ShellSettings Match(HttpContextBase httpContext) {
             // use Host header to prevent proxy alteration of the orignal request
             try {
@@ -112,8 +132,9 @@ namespace Maple.Web.Environment {
                 if (httpRequest == null) {
                     return null;
                 }
-
+                //域名
                 var host = httpRequest.Headers["Host"];
+                //请求地址的虚拟目录
                 var appRelativeCurrentExecutionFilePath = httpRequest.AppRelativeCurrentExecutionFilePath;
 
                 return Match(host ?? string.Empty, appRelativeCurrentExecutionFilePath);

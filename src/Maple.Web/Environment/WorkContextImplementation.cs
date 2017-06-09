@@ -31,6 +31,7 @@ namespace Maple.Web.Environment {
             return _componentContext.TryResolve(serviceType, out service);
         }
 
+
         public override T GetState<T>(string name) {
             var resolver = _stateResolvers.GetOrAdd(name, FindResolverForState<T>);
             return (T)resolver();

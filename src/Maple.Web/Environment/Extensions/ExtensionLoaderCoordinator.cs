@@ -50,13 +50,13 @@ namespace Maple.Web.Environment.Extensions {
         public ILogger Logger { get; set; }
 
         public void SetupExtensions() {
-            Logger.Information("Start loading extensions...");
-
+            Logger.Information("开始加载应用程序扩展...");
+            //获取应用程序扩展信息上下文
             var context = CreateLoadingContext();
 
-            // Notify all loaders about extensions removed from the web site
+            //通知扩展模块加载器移除所有扩展信息
             foreach (var dependency in context.DeletedDependencies) {
-                Logger.Information("Extension {0} has been removed from site", dependency.Name);
+                Logger.Information("扩展模块 {0} 从应用程序中移除", dependency.Name);
                 foreach (var loader in _loaders) {
                     if (dependency.LoaderName == loader.Name) {
                         loader.ExtensionRemoved(context, dependency);
@@ -64,24 +64,23 @@ namespace Maple.Web.Environment.Extensions {
                 }
             }
 
-            // For all existing extensions in the site, ask each loader if they can
-            // load that extension.
+            // 询问扩展模块加载器是否能够加载已发现的扩展程序
             foreach (var extension in context.AvailableExtensions) {
                 ProcessExtension(context, extension);
             }
 
-            // Execute all the work need by "ctx"
+            // 执行加载扩展所需的操作列表（删除或者拷贝文件）
             ProcessContextCommands(context);
 
-            // And finally save the new entries in the dependencies folder
+            // 保存应用程序扩展依赖信息
             _dependenciesFolder.StoreDescriptors(context.NewDependencies);
             _extensionDependenciesManager.StoreDependencies(context.NewDependencies, desc => GetExtensionHash(context, desc));
 
-            Logger.Information("Done loading extensions...");
+            Logger.Information("完成应用程序扩展加载...");
 
             // Very last step: Notify the host environment to restart the AppDomain if needed
             if (context.RestartAppDomain) {
-                Logger.Information("AppDomain restart required.");
+                Logger.Information("应用程序重新加载.");
                 _hostEnvironment.RestartAppDomain();
             }
         }
@@ -173,22 +172,27 @@ namespace Maple.Web.Environment.Extensions {
             context.ProcessedExtensions.Add(extension.Id, activatedExtension);
         }
 
+        /// <summary>
+        /// 获取应用程序扩展信息上下文
+        /// </summary>
+        /// <returns></returns>
         private ExtensionLoadingContext CreateLoadingContext() {
+            //获取扩展信息
             var availableExtensions = _extensionManager
                 .AvailableExtensions()
                 .Where(d => DefaultExtensionTypes.IsModule(d.ExtensionType) || DefaultExtensionTypes.IsTheme(d.ExtensionType))
                 .OrderBy(d => d.Id)
                 .ToList();
 
-            // Check there are no duplicates
+            // 检查是否有重复的扩展
             var duplicates = availableExtensions.GroupBy(ed => ed.Id).Where(g => g.Count() >= 2).ToList();
             if (duplicates.Any()) {
                 var sb = new StringBuilder();
-                sb.Append(T("There are multiple extensions with the same name installed in this instance of Orchard.\r\n"));
+                sb.Append(T("Maple应用程序中加载有多个重复的扩展.\r\n"));
                 foreach (var dup in duplicates) {
-                    sb.Append(T("Extension '{0}' has been found from the following locations: {1}.\r\n", dup.Key, string.Join(", ", dup.Select(e => e.Location + "/" + e.Id))));
+                    sb.Append(T("扩展 '{0}' 在如下地方被发现: {1}.\r\n", dup.Key, string.Join(", ", dup.Select(e => e.Location + "/" + e.Id))));
                 }
-                sb.Append(T("This issue can be usually solved by removing or renaming the conflicting extension."));
+                sb.Append(T("这个问题通常可以通过移除或重命名冲突扩展来解决."));
                 Logger.Error(sb.ToString());
                 throw new MapleWebCoreException(new LocalizedString(sb.ToString()));
             }
@@ -197,7 +201,7 @@ namespace Maple.Web.Environment.Extensions {
 
             var virtualPathModficationDates = new ConcurrentDictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
 
-            Logger.Information("Probing extensions");
+            Logger.Information("开始应用程序扩展检测...");
             var availableExtensionsProbes1 = _parallelCacheContext
                 .RunInParallel(availableExtensions, extension => 
                     _loaders.Select(loader => loader.Probe(extension)).Where(entry => entry != null).ToArray())
@@ -208,19 +212,19 @@ namespace Maple.Web.Environment.Extensions {
                 .RunInParallel(availableExtensionsProbes1, g =>
                     new { Id = g.Key, Entries = SortExtensionProbeEntries(g, virtualPathModficationDates)})
                 .ToDictionary(g => g.Id, g => g.Entries, StringComparer.OrdinalIgnoreCase);
-            Logger.Information("Done probing extensions");
+            Logger.Information("应用程序扩展检测完成");
 
             var deletedDependencies = previousDependencies
                 .Where(e => !availableExtensions.Any(e2 => StringComparer.OrdinalIgnoreCase.Equals(e2.Id, e.Name)))
                 .ToList();
 
-            // Collect references for all modules
-            Logger.Information("Probing extension references");
+            // 收集应用程序扩展所依赖的应用程序集信息
+            Logger.Information("开始收集应用程序扩展所依赖的应用程序集信息...");
             var references = _parallelCacheContext
                 .RunInParallel(availableExtensions, extension => _loaders.SelectMany(loader => loader.ProbeReferences(extension)).ToList())
                 .SelectMany(entries => entries)
                 .ToList();
-            Logger.Information("Done probing extension references");
+            Logger.Information("应用程序扩展所依赖的应用程序集信息收集完成");
 
             var referencesByModule = references
                 .GroupBy(entry => entry.Descriptor.Id, StringComparer.OrdinalIgnoreCase)
@@ -357,7 +361,7 @@ namespace Maple.Web.Environment.Extensions {
         }
 
         private void ProcessContextCommands(ExtensionLoadingContext ctx) {
-            Logger.Information("Executing list of operations needed for loading extensions...");
+            Logger.Information("执行加载扩展所需的操作列表（删除或者拷贝文件）...");
             foreach (var action in ctx.DeleteActions) {
                 action();
             }

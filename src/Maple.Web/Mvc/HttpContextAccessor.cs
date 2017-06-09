@@ -3,6 +3,9 @@ using System.Web;
 using Autofac;
 
 namespace Maple.Web.Mvc {
+    /// <summary>
+    /// HttpContext访问器
+    /// </summary>
     public class HttpContextAccessor : IHttpContextAccessor {
         readonly ILifetimeScope _lifetimeScope;
         private HttpContextBase _httpContext;
@@ -13,14 +16,16 @@ namespace Maple.Web.Mvc {
         }
 
         public HttpContextBase Current() {
-            var httpContext = GetStaticProperty();
 
+            var httpContext = GetStaticProperty();
             if (!IsBackgroundHttpContext(httpContext))
                 return new HttpContextWrapper(httpContext);
 
             if (_httpContext != null)
                 return _httpContext;
 
+
+            //如果未设置HttpContext，那么从autofac中获取
             if (_wca == null && _lifetimeScope.IsRegistered<IWorkContextAccessor>())
                 _wca = _lifetimeScope.Resolve<IWorkContextAccessor>();
 
@@ -32,10 +37,19 @@ namespace Maple.Web.Mvc {
             _httpContext = httpContext;
         }
 
+        /// <summary>
+        /// 是否为非UI的后台线程
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         private static bool IsBackgroundHttpContext(HttpContext httpContext) {
             return httpContext == null || httpContext.Items.Contains(DependentSetting.MvcModule.IsBackgroundHttpContextKey);
         }
 
+        /// <summary>
+        /// 获取当前线程中的HttpContext
+        /// </summary>
+        /// <returns></returns>
         private static HttpContext GetStaticProperty() {
             var httpContext = HttpContext.Current;
             if (httpContext == null) {

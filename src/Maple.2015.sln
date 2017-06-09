@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Themes", "Maple.Web.App\The
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple.Web.Core", "Maple.Web.App\Core\Maple.Web.Core.csproj", "{F9B24163-C655-43A0-9FF2-AB9FCEFEEF86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple.Setup", "Maple.Web.App\Modules\Maple.Setup\Maple.Setup.csproj", "{3D3F0960-FAF8-4E85-8793-8E25C0714D11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple.Resources", "Maple.Web.App\Modules\Maple.Resources\Maple.Resources.csproj", "{EE2CA743-4AD6-40CF-8B42-CC4F868DE3A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,8 +47,20 @@ Global
 		{F9B24163-C655-43A0-9FF2-AB9FCEFEEF86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9B24163-C655-43A0-9FF2-AB9FCEFEEF86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9B24163-C655-43A0-9FF2-AB9FCEFEEF86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D3F0960-FAF8-4E85-8793-8E25C0714D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3F0960-FAF8-4E85-8793-8E25C0714D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3F0960-FAF8-4E85-8793-8E25C0714D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3F0960-FAF8-4E85-8793-8E25C0714D11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE2CA743-4AD6-40CF-8B42-CC4F868DE3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2CA743-4AD6-40CF-8B42-CC4F868DE3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2CA743-4AD6-40CF-8B42-CC4F868DE3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2CA743-4AD6-40CF-8B42-CC4F868DE3A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D3F0960-FAF8-4E85-8793-8E25C0714D11} = {4D9278CB-49B9-4A45-95AB-6F008605C185}
+		{EE2CA743-4AD6-40CF-8B42-CC4F868DE3A7} = {4D9278CB-49B9-4A45-95AB-6F008605C185}
 	EndGlobalSection
 EndGlobal

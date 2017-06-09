@@ -125,9 +125,9 @@ namespace Maple.Web.Environment.ShellBuilders {
         private static IEnumerable<Feature> BuiltinFeatures() {
             yield return new Feature {
                 Descriptor = new FeatureDescriptor {
-                    Id = "Orchard.Framework",
+                    Id = "Maple.Web",
                     Extension = new ExtensionDescriptor {
-                        Id = "Orchard.Framework"
+                        Id = "Maple.Web"
                     }
                 },
                 ExportedTypes =

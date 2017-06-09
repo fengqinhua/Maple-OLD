@@ -8,6 +8,9 @@ using Maple.Web.FileSystems.VirtualPath;
 using Maple.Logging;
 
 namespace Maple.Web.Environment.Extensions {
+    /// <summary>
+    /// 扩展监测协调者
+    /// </summary>
     public class ExtensionMonitoringCoordinator : IExtensionMonitoringCoordinator {
         private readonly IVirtualPathMonitor _virtualPathMonitor;
         private readonly IAsyncTokenProvider _asyncTokenProvider;
@@ -31,12 +34,16 @@ namespace Maple.Web.Environment.Extensions {
         public ILogger Logger { get; set; }
         public bool Disabled { get; set; }
 
+        /// <summary>
+        /// 监控模块/皮肤的变化
+        /// </summary>
+        /// <param name="monitor"></param>
         public void MonitorExtensions(Action<IVolatileToken> monitor) {
-            // We may be disabled by custom host configuration for performance reasons
+            // 由于性能原因，我们可能会禁用该功能
             if (Disabled)
                 return;
 
-            //PERF: Monitor extensions asynchronously.
+            //PERF: 异步监控扩展信息.
             monitor(_asyncTokenProvider.GetToken(MonitorExtensionsWork));
         }
 
@@ -44,13 +51,13 @@ namespace Maple.Web.Environment.Extensions {
             var locations = _extensionManager.AvailableExtensions().Select(e => e.Location).Distinct(StringComparer.InvariantCultureIgnoreCase);
 
             Logger.Information("Start monitoring extension files...");
-            // Monitor add/remove of any module/theme
-            foreach(string location in locations) {
+            // 监控是否新增或移除模块/皮肤
+            foreach (string location in locations) {
                 Logger.Debug("Monitoring virtual path \"{0}\"", location);
                 monitor(_virtualPathMonitor.WhenPathChanges(location));
             }
 
-            // Give loaders a chance to monitor any additional changes
+            // 给装载机一个机会来监控任何额外的变化
             var extensions = _extensionManager.AvailableExtensions().Where(d => DefaultExtensionTypes.IsModule(d.ExtensionType) || DefaultExtensionTypes.IsTheme(d.ExtensionType)).ToList();
             foreach (var extension in extensions) {
                 foreach (var loader in _loaders) {

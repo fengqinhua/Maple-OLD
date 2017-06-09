@@ -4,6 +4,9 @@ using Maple.Web.Environment.Descriptor.Models;
 
 namespace Maple.Web.Environment.State
 {
+    /// <summary>
+    /// 操作引擎
+    /// </summary>
     public interface IProcessingEngine
     {
         /// <summary>

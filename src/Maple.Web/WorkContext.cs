@@ -7,26 +7,26 @@ using Maple.Web.Settings;
 namespace Maple.Web
 {
     /// <summary>
-    /// A work context for work context scope
+    /// 工作上下文
     /// </summary>
     public abstract class WorkContext
     {
         /// <summary>
-        /// Resolves a registered dependency type.
+        /// 获得已注册的类型
         /// </summary>
         /// <typeparam name="T">The type of the dependency.</typeparam>
         /// <returns>An instance of the dependency if it could be resolved.</returns>
         public abstract T Resolve<T>();
 
         /// <summary>
-        /// Resolves a registered dependency type.
+        /// 获得已注册的类型
         /// </summary>
         /// <param name="serviceType">The type of the dependency.</param>
         /// <returns>An instance of the dependency if it could be resolved.</returns>
         public abstract object Resolve(Type serviceType);
 
         /// <summary>
-        /// Tries to resolve a registered dependency type.
+        /// 获得已注册的类型
         /// </summary>
         /// <typeparam name="T">The type of the dependency.</typeparam>
         /// <param name="service">An instance of the dependency if it could be resolved.</param>
@@ -34,18 +34,30 @@ namespace Maple.Web
         public abstract bool TryResolve<T>(out T service);
 
         /// <summary>
-        /// Tries to resolve a registered dependency type.
+        /// 获得已注册的类型
         /// </summary>
         /// <param name="serviceType">The type of the dependency.</param>
         /// <param name="service">An instance of the dependency if it could be resolved.</param>
         /// <returns>True if the dependency could be resolved, false otherwise.</returns>
         public abstract bool TryResolve(Type serviceType, out object service);
 
+        /// <summary>
+        /// 设置状态信息
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public abstract T GetState<T>(string name);
+        /// <summary>
+        /// 读取状态信息
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         public abstract void SetState<T>(string name, T value);
 
         /// <summary>
-        /// The http context corresponding to the work context
+        /// 获得工作上下文中的 HttpContext 信息
         /// </summary>
         public HttpContextBase HttpContext
         {
@@ -54,7 +66,7 @@ namespace Maple.Web
         }
 
         /// <summary>
-        /// The Layout shape corresponding to the work context
+        /// 获得工作上下文中的 Layout 信息
         /// </summary>
         public dynamic Layout
         {
@@ -63,7 +75,7 @@ namespace Maple.Web
         }
 
         /// <summary>
-        /// Settings of the site corresponding to the work context
+        /// 获得工作上下文中的 网站站点 信息
         /// </summary>
         public ISite CurrentSite
         {
@@ -72,7 +84,7 @@ namespace Maple.Web
         }
 
         /// <summary>
-        /// The user, if there is any corresponding to the work context
+        /// 获得工作上下文中的 当前用户 信息
         /// </summary>
         public IUser CurrentUser
         {
@@ -81,7 +93,7 @@ namespace Maple.Web
         }
 
         /// <summary>
-        /// The theme used in the work context
+        /// 获得工作上下文中的 皮肤 信息
         /// </summary>
         public ExtensionDescriptor CurrentTheme
         {
@@ -90,7 +102,7 @@ namespace Maple.Web
         }
 
         /// <summary>
-        /// Active culture of the work context
+        /// 获得工作上下文中的 语言 信息
         /// </summary>
         public string CurrentCulture
         {
@@ -99,7 +111,7 @@ namespace Maple.Web
         }
 
         /// <summary>
-        /// Active calendar of the work context
+        /// 获得工作上下文中的 日历 信息
         /// </summary>
         public string CurrentCalendar
         {
@@ -108,7 +120,7 @@ namespace Maple.Web
         }
 
         /// <summary>
-        /// Time zone of the work context
+        /// 获得工作上下文中的 时区 信息
         /// </summary>
         public TimeZoneInfo CurrentTimeZone
         {

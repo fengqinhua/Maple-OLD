@@ -130,7 +130,7 @@
     <Compile Include="Environment\DefaultHostContainer.cs" />
     <Compile Include="Environment\DefaultHostEnvironment.cs" />
     <Compile Include="Environment\DefaultMapleHost.cs" />
-    <Compile Include="Environment\DefaultOrchardShell.cs" />
+    <Compile Include="Environment\DefaultMapleShell.cs" />
     <Compile Include="Environment\Descriptor\IShellDescriptorManager.cs" />
     <Compile Include="Environment\Descriptor\Models\ShellDescriptor.cs" />
     <Compile Include="Environment\Descriptor\ShellDescriptorCache.cs" />
@@ -183,8 +183,8 @@
     <Compile Include="Environment\IHostLocalRestart.cs" />
     <Compile Include="Environment\IMapleHost.cs" />
     <Compile Include="Environment\IMapleHostContainer.cs" />
-    <Compile Include="Environment\IOrchardShell.cs" />
-    <Compile Include="Environment\IOrchardShellEvents.cs" />
+    <Compile Include="Environment\IMapleShell.cs" />
+    <Compile Include="Environment\IMapleShellEvents.cs" />
     <Compile Include="Environment\IShellContainerRegistrations.cs" />
     <Compile Include="Environment\IShim.cs" />
     <Compile Include="Environment\IWorkContextEvents.cs" />

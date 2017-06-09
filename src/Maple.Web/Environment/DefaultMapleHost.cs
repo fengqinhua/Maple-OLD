@@ -85,9 +85,9 @@ namespace Maple.Web.Environment
 
         void IMapleHost.Initialize()
         {
-            Logger.Information("Initializing");
+            Logger.Information("开始Maple应用程序初始化");
             BuildCurrent();
-            Logger.Information("Initialized");
+            Logger.Information("Maple应用程序初始化完成");
         }
 
         void IMapleHost.ReloadExtensions()
@@ -106,11 +106,15 @@ namespace Maple.Web.Environment
             Logger.Debug("EndRequest");
             EndRequest();
         }
-
+        /// <summary>
+        /// 为租户创建独立环境
+        /// </summary>
+        /// <param name="shellSettings"></param>
+        /// <returns></returns>
         IWorkContextScope IMapleHost.CreateStandaloneEnvironment(ShellSettings shellSettings)
         {
-            Logger.Debug("Creating standalone environment for tenant {0}", shellSettings.Name);
-
+            Logger.Debug("为租户创建独立环境 {0}", shellSettings.Name);
+            //监控扩展模块是否发生变化以及Host是否需要重启
             MonitorExtensions();
             BuildCurrent();
 
@@ -120,7 +124,7 @@ namespace Maple.Web.Environment
         }
 
         /// <summary>
-        /// Ensures shells are activated, or re-activated if extensions have changed
+        /// 确保shell被激活，或如果扩展已经改变，重新激活shell
         /// </summary>
         IEnumerable<ShellContext> BuildCurrent()
         {
@@ -130,8 +134,11 @@ namespace Maple.Web.Environment
                 {
                     if (_shellContexts == null)
                     {
+                        //加载应用程序扩展信息
                         SetupExtensions();
+                        //监控扩展模块是否发生变化以及Host是否需要重启
                         MonitorExtensions();
+                        //创建并激活Shell
                         CreateAndActivateShells();
                     }
                 }
@@ -139,14 +146,16 @@ namespace Maple.Web.Environment
 
             return _shellContexts;
         }
-
+        /// <summary>
+        /// 如果shell配置发生变化，而且无需重启整个host，则重新激活shell
+        /// </summary>
         void StartUpdatedShells()
         {
             while (_tenantsToRestart.GetState().Any())
             {
                 var settings = _tenantsToRestart.GetState().First();
                 _tenantsToRestart.GetState().Remove(settings);
-                Logger.Debug("Updating shell: " + settings.Name);
+                Logger.Debug("更新Shell: " + settings.Name);
                 lock (_syncLock)
                 {
                     ActivateShell(settings);
@@ -154,11 +163,14 @@ namespace Maple.Web.Environment
             }
         }
 
+        /// <summary>
+        /// 创建并激活租户
+        /// </summary>
         void CreateAndActivateShells()
         {
-            Logger.Information("Start creation of shells");
+            Logger.Information("开始创建Shell");
 
-            // Is there any tenant right now?
+            // 从App_Data/site文件夹中读取Shell子站点信息
             var allSettings = _shellSettingsManager.LoadSettings()
                 .Where(settings => settings.State == TenantState.Running || settings.State == TenantState.Uninitialized || settings.State == TenantState.Initializing)
                 .ToArray();
@@ -209,22 +221,22 @@ namespace Maple.Web.Environment
                     }
                 });
             }
-            // No settings, run the Setup.
             else
             {
+                //如果未发现站点信息,那么创建缺省的Defalut子站点信息并激活之
                 var setupContext = CreateSetupContext();
                 ActivateShell(setupContext);
             }
 
-            Logger.Information("Done creating shells");
+            Logger.Information("Shell创建并激活完成.");
         }
 
         /// <summary>
-        /// Starts a Shell and registers its settings in RunningShellTable
+        /// 注册、启用一个租户并将其加入 RunningShellTable
         /// </summary>
         private void ActivateShell(ShellContext context)
         {
-            Logger.Debug("Activating context for tenant {0}", context.Settings.Name);
+            Logger.Debug("启用租户 -- {0}", context.Settings.Name);
             context.Shell.Activate();
 
             lock (_shellContextsWriteLock)
@@ -239,34 +251,38 @@ namespace Maple.Web.Environment
         }
 
         /// <summary>
-        /// Creates a transient shell for the default tenant's setup.
+        /// 创建缺省得子站点上下文
         /// </summary>
         private ShellContext CreateSetupContext()
         {
-            Logger.Debug("Creating shell context for root setup.");
+            Logger.Debug("创建缺省得子站点上下文.");
             return _shellContextFactory.CreateSetupContext(new ShellSettings { Name = ShellSettings.DefaultName });
         }
-
         /// <summary>
-        /// Creates a shell context based on shell settings.
+        /// 基于Shell设置创建子上下文
         /// </summary>
         private ShellContext CreateShellContext(ShellSettings settings)
         {
             if (settings.State == TenantState.Uninitialized || settings.State == TenantState.Invalid)
             {
-                Logger.Debug("Creating shell context for tenant {0} setup.", settings.Name);
+                Logger.Debug("创建站点 {0} 上下文 .", settings.Name);
                 return _shellContextFactory.CreateSetupContext(settings);
             }
 
-            Logger.Debug("Creating shell context for tenant {0}.", settings.Name);
+            Logger.Debug("创建站点 {0} 上下文 .", settings.Name);
             return _shellContextFactory.CreateShellContext(settings);
         }
-
+        /// <summary>
+        /// 通过ExtensionLoaderCoordinator扩展协调器，加载扩展
+        /// </summary>
         private void SetupExtensions()
         {
             _extensionLoaderCoordinator.SetupExtensions();
         }
 
+        /// <summary>
+        /// 监控应用程序及模块是否发生变化
+        /// </summary>
         private void MonitorExtensions()
         {
             // This is a "fake" cache entry to allow the extension loader coordinator
@@ -275,20 +291,22 @@ namespace Maple.Web.Environment
             _cacheManager.Get("OrchardHost_Extensions", true,
                               ctx =>
                               {
+                                  //监控模块/皮肤的变化
                                   _extensionMonitoringCoordinator.MonitorExtensions(ctx.Monitor);
+                                  //监控重启标识文件 app/App_data/hrestart.txt
                                   _hostLocalRestart.Monitor(ctx.Monitor);
+                                  //终止所有shell上下文
                                   DisposeShellContext();
+
                                   return "";
                               });
         }
-
         /// <summary>
-        /// Terminates all active shell contexts, and dispose their scope, forcing
-        /// them to be reloaded if necessary.
+        /// 终止所有活动的shell上下文，并处理它们的作用域，以便重新启动它们
         /// </summary>
         private void DisposeShellContext()
         {
-            Logger.Information("Disposing active shell contexts");
+            Logger.Information("终止所有活动的租户");
 
             if (_shellContexts != null)
             {
@@ -309,18 +327,20 @@ namespace Maple.Web.Environment
 
         protected virtual void BeginRequest()
         {
+            //当站点未完成初始化时，阻止用户访问
             BlockRequestsDuringSetup();
 
+            //委托事件： 确保已加载shell上下文，或者如果扩展模块发生变化重新加载shell上下文
             Action ensureInitialized = () =>
             {
-                // Ensure all shell contexts are loaded, or need to be reloaded if
-                // extensions have changed
+                //监控扩展模块是否发生变化以及Host是否需要重启
                 MonitorExtensions();
+                //确保shell被激活，或如果扩展已经改变，重新激活shell
                 BuildCurrent();
             };
 
+            //1、根据域名+请求的虚拟目录匹配子站点设置信息
             ShellSettings currentShellSettings = null;
-
             var httpContext = _httpContextAccessor.Current();
             if (httpContext != null)
             {
@@ -329,6 +349,7 @@ namespace Maple.Web.Environment
 
             if (currentShellSettings == null)
             {
+                //2、如果无法匹配子站点设置信息，那么重新加载shell上下文
                 ensureInitialized();
             }
             else
@@ -340,6 +361,7 @@ namespace Maple.Web.Environment
             }
 
             // StartUpdatedShells can cause a writer shell activation lock so it should run outside the reader lock.
+            // 如果shell配置发生变化，而且无需重启整个host，则重新激活shell
             StartUpdatedShells();
         }
 
@@ -354,6 +376,7 @@ namespace Maple.Web.Environment
                 _processingEngine.ExecuteNextTask();
             }
 
+            // 如果shell配置发生变化，而且无需重启整个host，则重新激活shell
             StartUpdatedShells();
         }
 
@@ -366,19 +389,21 @@ namespace Maple.Web.Environment
             {
                 if (!_tenantsToRestart.GetState().Any(t => t.Name.Equals(settings.Name)))
                 {
-                    Logger.Debug("Adding tenant to restart: " + settings.Name + " " + settings.State);
+                    Logger.Debug("设置子站点重启: " + settings.Name + " " + settings.State);
                     _tenantsToRestart.GetState().Add(settings);
                 }
             }
         }
-
+        /// <summary>
+        /// 启用一个租户Shell
+        /// </summary>
+        /// <param name="settings"></param>
         public void ActivateShell(ShellSettings settings)
         {
-            Logger.Debug("Activating shell: " + settings.Name);
+            Logger.Debug("启用一个Shell: " + settings.Name);
 
-            // look for the associated shell context
+            // 如果列表中不存在当前Shell则返回
             var shellContext = _shellContexts.FirstOrDefault(c => c.Settings.Name == settings.Name);
-
             if (shellContext == null && settings.State == TenantState.Disabled)
             {
                 return;
@@ -427,7 +452,7 @@ namespace Maple.Web.Environment
         }
 
         /// <summary>
-        /// A feature is enabled/disabled, the tenant needs to be restarted
+        /// 租户信息发生变化时（一个功能已启用/禁用），租户需要重新启动
         /// </summary>
         void IShellDescriptorManagerEventHandler.Changed(ShellDescriptor descriptor, string tenant)
         {
@@ -457,10 +482,13 @@ namespace Maple.Web.Environment
                 return;
             }
 
-            Logger.Debug("Adding tenant to restart: " + tenant);
+            Logger.Debug("设置子站点重启: " + tenant);
             _tenantsToRestart.GetState().Add(context.Settings);
         }
 
+        /// <summary>
+        /// 当站点未完成初始化时，阻止用户访问
+        /// </summary>
         private void BlockRequestsDuringSetup()
         {
             var httpContext = _httpContextAccessor.Current();
@@ -477,8 +505,8 @@ namespace Maple.Web.Environment
             {
                 var response = httpContext.Response;
                 response.StatusCode = 503;
-                response.StatusDescription = "This tenant is currently initializing. Please try again later.";
-                response.Write("This tenant is currently initializing. Please try again later.");
+                response.StatusDescription = "此站点当前正在初始化。请稍后再试.";
+                response.Write("此站点当前正在初始化。请稍后再试.");
             }
         }
 

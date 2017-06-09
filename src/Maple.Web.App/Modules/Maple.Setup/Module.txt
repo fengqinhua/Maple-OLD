@@ -1,0 +1,15 @@
+﻿Name: 应用程序初始化
+Author: The Maple Team
+Website: 
+Version: 1.0
+OrchardVersion: 1.0
+Description: 应用程序首次运行时配置系统运行环境.
+FeatureDescription: 用于应用程序首次运行时缺省站点的设置。一旦运行完成后，该模块将自动禁用.
+Category: Core
+Dependencies: Maple.Setup.Services
+Priority: 1
+Features:
+    Maple.Setup.Services
+        Name: 应用程序初始化 Services
+        Description: 为应用程序初始化体哦那个API服务.
+        Category: Core

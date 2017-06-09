@@ -1,0 +1,13 @@
+﻿Name: JS或CSS组件资源库
+AntiForgery: enabled
+Author: The Maple Team
+Website: 
+Version: 1.0
+OrchardVersion: 1.0
+Description: 为其他模块提供第三方的JS/CSS组件资源
+Priority: 5
+Features:
+	Maple.Resources:
+		Name: JS或CSS组件资源库
+		Description: 为其他模块提供第三方的JS/CSS组件资源
+		Category: Core

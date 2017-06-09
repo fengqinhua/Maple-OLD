@@ -1,5 +1,5 @@
 namespace Maple.Web.Environment {
-    public interface IOrchardShell {
+    public interface IMapleShell {
         void Activate();
         void Terminate();
     }

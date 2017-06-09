@@ -27,6 +27,9 @@ namespace Maple.Web.Environment.Descriptor {
         
     }
 
+    /// <summary>
+    /// Shell租户
+    /// </summary>
     public interface IShellDescriptorManagerEventHandler : IEventHandler {
         void Changed(ShellDescriptor descriptor, string tenant);
     }

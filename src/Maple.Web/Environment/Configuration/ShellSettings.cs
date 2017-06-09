@@ -4,9 +4,7 @@ using System.Linq;
 
 namespace Maple.Web.Environment.Configuration {
     /// <summary>
-    /// Represents the minimalistic set of fields stored for each tenant. This 
-    /// model is obtained from the IShellSettingsManager, which by default reads this
-    /// from the App_Data settings.txt files.
+    /// 子站点设置信息。该类从IShellSettingsManager获得，默认情况下从App_data目录下的settngs.txt文件中读取
     /// </summary>
     public class ShellSettings {
         public const string DefaultName = "Default";
